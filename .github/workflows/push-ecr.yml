@@ -2,7 +2,7 @@ name: Publish Image to ECR Automatically
 
 on:
   push:
-    branches: ["workshop"]
+    branches: ["main"]
 
 env:
   APP_NAME: hextris
