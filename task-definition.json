@@ -1,0 +1,47 @@
+{
+  "family": "hextris-config",
+  "taskRoleArn": "arn:aws:iam::851725368030:role/LabRole",
+  "executionRoleArn": "arn:aws:iam::851725368030:role/LabRole",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "hextris",
+      "image": "851725368030.dkr.ecr.us-east-1.amazonaws.com/hextris:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "name": "app-port",
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "environment": [
+        {
+          "name": "APP_NAME",
+          "value": "hextris-dev"
+        },
+        {
+          "name": "APP_ENV",
+          "value": "dev"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/hextris-config",
+          "mode": "non-blocking",
+          "awslogs-create-group": "true",
+          "max-buffer-size": "25m",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      }
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048"
+}
