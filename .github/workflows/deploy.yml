@@ -2,7 +2,7 @@ name: Deploy Code to Lambda Fn
 
 on:
   push:
-    branches: ["main"]
+    branches: ["serverless"]
 
 env:
   APP_NAME: serverless-app
