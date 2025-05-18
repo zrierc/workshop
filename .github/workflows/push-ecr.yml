@@ -34,8 +34,10 @@ jobs:
           aws --version
 
       - name: Upload to S3
+        env:
+          S3_BUCKET: ${{ secrets.BUCKET_NAME }}
         run: |
-          aws s3 cp index.html s3://workshop-bucket-25/index.html
+          aws s3 cp Dockerfile s3://$S3_BUCKET/Dockerfile
 
       - name: Login to Amazon ECR
         id: login-ecr
