@@ -6,6 +6,8 @@ on:
 
 env:
   APP_NAME: hextris
+  ECS_CLUSTER: workshop-smkn1-jakarta
+  ECS_SERVICE: hextris-app
 
 jobs:
   build:
@@ -53,6 +55,14 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:latest .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker push $REGISTRY/$REPOSITORY:latest
+
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: task-definition.json
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          force-new-deployment: true
 
       - name: Finish
         run: echo "Selesai menjalankan workflow."
