@@ -1,12 +1,12 @@
 {
   "family": "hextris-config",
-  "taskRoleArn": "arn:aws:iam::851725368030:role/LabRole",
-  "executionRoleArn": "arn:aws:iam::851725368030:role/LabRole",
+  "taskRoleArn": "arn:aws:iam::623001655792:role/LabRole",
+  "executionRoleArn": "arn:aws:iam::623001655792:role/LabRole",
   "networkMode": "awsvpc",
   "containerDefinitions": [
     {
       "name": "hextris",
-      "image": "851725368030.dkr.ecr.us-east-1.amazonaws.com/hextris:latest",
+      "image": "623001655792.dkr.ecr.us-east-1.amazonaws.com/hextris:latest",
       "essential": true,
       "portMappings": [
         {
