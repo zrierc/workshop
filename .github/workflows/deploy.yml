@@ -1,0 +1,48 @@
+name: Deploy Code to Lambda Fn
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  APP_NAME: serverless-app
+  LAMBDA_NAME: lambda-workshop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Print Hello World
+        run: echo "Hello World"
+
+      - name: Print ENV
+        run: echo "APP ENV = ${APP_NAME}"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
+      - name: Check AWS CLI
+        run: |
+          aws --version
+
+      - name: Build code
+        run: |
+          zip code.zip lambda_function.py
+
+      - name: Upload to Lambda
+        run: |
+          aws lambda update-function-code \
+              --function-name  $LAMBDA_NAME \
+              --zip-file fileb://code.zip
+
+      - name: Finish
+        run: echo "Selesai menjalankan workflow."
